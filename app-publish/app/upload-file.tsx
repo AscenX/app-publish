@@ -159,8 +159,8 @@ export default function UploadFile(props: any) {
             <>
                 <Input value={bundleId} onFocus={() => setIsEditing(true)} onBlur={() => setIsEditing(false)} onChange={(e) => setBundleId(e.target.value)} placeholder="Bundle ID"></Input>
                 <div className="mt-4 flex flex-row items-start w-full">
-                    <Button className="mr-2" variant="secondary" onClick={() => setBundleId('com.krquant.app')}>com.krquant.app(测试)</Button>
-                    <Button variant="secondary" onClick={() => setBundleId('com.front.fameex1')}>com.front.fameex1(正式)</Button>
+                    <Button className="mr-2" variant="secondary" onClick={() => setBundleId('com.app.test')}>com.app.test(测试)</Button>
+                    <Button variant="secondary" onClick={() => setBundleId('com.app.release')}>com.app.release(正式)</Button>
                 </div>
             </>
              }
