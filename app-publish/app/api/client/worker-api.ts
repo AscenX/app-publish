@@ -1,9 +1,9 @@
 import { R2ObjectListResp, UploadResult } from "../../r2interface"
 
 /// r2的API调用 base URL，用于接口调用
-const baseUrl = ''
+const baseUrl = 'https://r2-worker.zyb428.workers.dev/'
 /// r2的公开子域，用于下载
-const pubUrl = ''
+const pubUrl = 'https://pub-8b9391eb808c46efaa19ef61f2264668.r2.dev'
 
 
 const getObjectList = async (): Promise<R2Object[]> => {
