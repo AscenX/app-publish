@@ -5,6 +5,8 @@ const baseUrl = 'https://r2-worker.zyb428.workers.dev/'
 /// r2的公开子域，用于下载
 const pubUrl = 'https://pub-8b9391eb808c46efaa19ef61f2264668.r2.dev'
 
+const appBucket = 'app-publish'
+
 
 const getObjectList = async (): Promise<R2Object[]> => {
     const url = baseUrl + 'getObjectList'
@@ -59,14 +61,14 @@ const getDownloadUrl = (key: string, timestamp: number = 0) => {
         fileName = key.slice(0, key.lastIndexOf('.'))
         fileName = `${fileName}_${timestamp}${type}`
     }
-    const url = `${pubUrl}${fileName}`
+    const url = `${pubUrl}/${appBucket}/${fileName}`
 
     return url
 }
 
 const getIpaPlistUrl = (object: R2Object): string | null => {
     if (object.key.endsWith('ipa')) {
-        return `${pubUrl}install_${object.version}.plist`
+        return `${pubUrl}/${appBucket}/install_${object.version}.plist`
     }
     return null
 }
@@ -96,7 +98,7 @@ const getObjectInfo = async (fileName: string, timestamp: number = 0) => {
         key = `${key}_${timestamp}${type}`
     }
 
-    const url = `${baseUrl}getObjectInfo?name=${key}`
+    const url = `${baseUrl}getObjectInfo?name=${appBucket}/${key}`
 
 
     try {

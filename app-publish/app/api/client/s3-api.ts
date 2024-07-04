@@ -1,10 +1,11 @@
 
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
+// 请填写自己的accessKeyId, secretAccessKey, endpoint
 const client = new S3Client({
     credentials: {
         accessKeyId: 'dc011bcd4ef02a3437db09b272989419',
-        secretAccessKey: 'e719cf9e117346b590c72e533d9c1854eeaf465369db661283caef50fb71462b'
+        secretAccessKey: '45c669a36ddd717d3645731a73b6a40af43f8d7cc2336d9cdab76f7955281ad2'
     },
     endpoint: 'https://c3139e0ac31191541a73d5e3bd30c84f.r2.cloudflarestorage.com/app-publish',
     region: 'auto'

@@ -2,7 +2,7 @@ const getIpaInstallUrl = (plistUrl: string) => {
 	return `itms-services://?action=download-manifest&url=${plistUrl}`
 }
 
-const getIpaInstallPlist = (bundleId: string, installUrl: string, version: string) => {
+const getIpaInstallPlist = (name: string, bundleId: string, installUrl: string, version: string) => {
 
 	const installPlist = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -29,7 +29,7 @@ const getIpaInstallPlist = (bundleId: string, installUrl: string, version: strin
 				<key>kind</key>
 				<string>software</string>
 				<key>title</key>
-				<string>FameEX</string>
+				<string>${name}</string>
 			</dict>
 		</dict>
 	</array>

@@ -23,11 +23,12 @@ export default function UploadFile(props: any) {
 
     const [isIpa, setIsIpa] = useState(false)
     const [bundleId, setBundleId] = useState('')
+    const [appName, setAppName] = useState('')
 
     const [isEditing, setIsEditing] = useState(false)
 
     const uploadWithPlist = async (versionId: string, title: string, downloadUrl: string, bundleId: string, version: string) => {
-        const plistData = getIpaInstallPlist(bundleId, downloadUrl, version)
+        const plistData = getIpaInstallPlist(appName, bundleId, downloadUrl, version)
         const plistFile = new File([plistData], `install_${versionId}.plist`, { type: 'text/xml' });
 
         return await s3UploadFile(plistFile, `install_${versionId}.plist`, `${title} ipa install plist`, 0)
@@ -63,13 +64,14 @@ export default function UploadFile(props: any) {
             const objInfo = await getObjectInfo(file.name, time)
             const version = objInfo?.data.version
             if (version != null && version != undefined) {
-                const plistRes = await uploadWithPlist(objInfo!.data.version, file.name, downloadUrl, bundleId, '3.4.5')
+                const plistRes = await uploadWithPlist(objInfo!.data.version, file.name, downloadUrl, bundleId, '3.5.0')
                 isSuccess = plistRes != null && plistRes.$metadata.httpStatusCode == 200
             }
         }
 
         // 发送lark通知
-        sendLarkNotice(hexToStr(title), hexToStr(desc), isIpa)
+        // sendLarkNotice(title, desc, isIpa)
+
         setIsUploading(false)
         if (isSuccess) {
             
@@ -157,11 +159,16 @@ export default function UploadFile(props: any) {
             <div className="h-4"></div>
             { isIpa && 
             <>
-                <Input value={bundleId} onFocus={() => setIsEditing(true)} onBlur={() => setIsEditing(false)} onChange={(e) => setBundleId(e.target.value)} placeholder="Bundle ID"></Input>
-                <div className="mt-4 flex flex-row items-start w-full">
-                    <Button className="mr-2" variant="secondary" onClick={() => setBundleId('com.app.test')}>com.app.test(测试)</Button>
-                    <Button variant="secondary" onClick={() => setBundleId('com.app.release')}>com.app.release(正式)</Button>
-                </div>
+                <Input value={appName} onFocus={() => setIsEditing(true)} onBlur={() => setIsEditing(false)} onChange={(e) => setAppName(e.target.value)} placeholder="APP Name"></Input>
+                <Input className="mt-3" value={bundleId} onFocus={() => setIsEditing(true)} onBlur={() => setIsEditing(false)} onChange={(e) => setBundleId(e.target.value)} placeholder="Bundle ID"></Input>
+                {
+                    /*
+                     <div className="mt-4 flex flex-row items-start w-full">
+                        <Button className="mr-2" variant="secondary" onClick={() => setBundleId('com.app.test')}>com.app.test(测试)</Button>
+                        <Button variant="secondary" onClick={() => setBundleId('com.app.release')}>com.app.release(正式)</Button>
+                    </div> 
+                     */
+                }
             </>
              }
             
